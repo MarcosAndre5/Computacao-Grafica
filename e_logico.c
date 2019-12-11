@@ -7,32 +7,32 @@ typedef struct{
 }pixel;
 
 int main(){
-	FILE *image;
-	FILE *image2;
-	FILE *newImage;
+	FILE *imagem1;
+	FILE *imagem2;
+	FILE *novaImagem;
 
-	char key[5], _key[5];
-	int i, j, larg, alt, max, aux, _i,_j, _larg, _alt, _max;
+	char chave[5], _chave[5];
+	int i, j, larg, alt, max, aux, _i, _j, _larg, _alt, _max;
 
-	image = fopen("AA.ppm", "r");
+	imagem1 = fopen("AA.ppm", "r");
 
-	if(image == NULL){
-		printf("Erro na abertura do arquivo\n");
+	if(imagem1 == NULL){
+		printf("Erro na abertura da Imagem1!\n");
 		return 0;
 	}
 
-	fscanf(image, "%s", key);
+	fscanf(imagem1, "%s", chave);
 
-	if(strcmp(key, "P3") != 0){
-		printf("Arquivo nao e PPM\n");
-		printf("%s\n", key);
-		fclose(image);
+	if(strcmp(chave, "P3") != 0){
+		printf("Erro! A Imagem1 não é no formato PPM.\n");
+		printf("%s\n", chave);
+		fclose(imagem1);
 		return 0;
 	}
 
-	fscanf(image, "%d %d\n%d\n", &alt, &larg, &max);
+	fscanf(imagem1, "%d %d\n%d\n", &alt, &larg, &max);
 
-	printf("Image larg = %d alt = %d key = %s max = %d\n", larg, alt, key, max);
+	printf("Imagem1: largura = %d altura = %d chave = %s máximo = %d\n", larg, alt, chave, max);
 
 	pixel **RGB = (pixel**) malloc (alt*sizeof(pixel*));
 
@@ -41,35 +41,35 @@ int main(){
 
 	for(i = 0; i < alt; i++)
 		for(j = 0; j < larg; j++){
-			fscanf(image, "%d", &RGB[i][j].r);
-			fscanf(image, "%d", &RGB[i][j].g);
-			fscanf(image, "%d", &RGB[i][j].b);
+			fscanf(imagem1, "%d", &RGB[i][j].r);
+			fscanf(imagem1, "%d", &RGB[i][j].g);
+			fscanf(imagem1, "%d", &RGB[i][j].b);
 		}
 
-	image2 = fopen("BB.ppm", "r");
+	imagem2 = fopen("BB.ppm", "r");
 
-	if(image2 == NULL){
-		printf("Erro na abertura do arquivo\n");
+	if(imagem2 == NULL){
+		printf("Erro na abertura da Imagem2!\n");
 		return 0;
 	}
 
-	fscanf(image2, "%s", _key);
+	fscanf(imagem2, "%s", _chave);
 
-	if(strcmp(_key, "P3") != 0){
-		printf("Arquivo n eh PPM\n");
-		printf("%s\n",_key);
-		fclose(image2);
+	if(strcmp(_chave, "P3") != 0){
+		printf("Erro! A Imagem2 não é no formato PPM.\n");
+		printf("%s\n", _chave);
+		fclose(imagem2);
 		return 0;
 	}
 
-	fscanf(image2, "%d %d\n%d\n", &_alt, &_larg, &_max);
+	fscanf(imagem2, "%d %d\n%d\n", &_alt, &_larg, &_max);
 
-	printf("Image2 larg = %d alt = %d key = %s max = %d\n", _larg, _alt, _key, _max);
+	printf("Imagem2: largura = %d altura = %d chave = %s máximo = %d\n", _larg, _alt, _chave, _max);
 
-	newImage = fopen("arquivo.ppm", "w+");
+	novaImagem = fopen("imagem_eLogico.ppm", "w+");
 
-	if(newImage == NULL){
-		printf("Erro ao abrir a nova imagem!");
+	if(novaImagem == NULL){
+		printf("Erro ao abrir a Nova Imagem!");
 		return 0;
 	}
 
@@ -80,31 +80,31 @@ int main(){
 
 	for(i = 0; i < alt; i++)
 		for(j = 0; j < larg; j++){
-			fscanf(image2, "%d", &RGB2[i][j].r);
-			fscanf(image2, "%d", &RGB2[i][j].g);
-			fscanf(image2, "%d", &RGB2[i][j].b);
+			fscanf(imagem2, "%d", &RGB2[i][j].r);
+			fscanf(imagem2, "%d", &RGB2[i][j].g);
+			fscanf(imagem2, "%d", &RGB2[i][j].b);
 		}
 
-	fprintf(newImage, "P3\n%d %d\n%d\n", alt, larg, max);
+	fprintf(novaImagem, "P3\n%d %d\n%d\n", alt, larg, max);
 
 	for(i = 0; i < alt; i++){
 		for(j = 0; j < larg; j++){
 			if((RGB[i][j].r == RGB2[i][j].r) && (RGB[i][j].g == RGB2[i][j].g) && (RGB[i][j].b == RGB2[i][j].b)){
-                fprintf(newImage, "%d ", RGB[i][j].r);
-                fprintf(newImage, "%d ", RGB[i][j].g);
-                fprintf(newImage, "%d ", RGB[i][j].b);
-            }else{
-	            aux = 255;
-	            fprintf(newImage, "%d ", aux);
-				fprintf(newImage, "%d ", aux);
-				fprintf(newImage, "%d ", aux);
+				fprintf(novaImagem, "%d ", RGB[i][j].r);
+				fprintf(novaImagem, "%d ", RGB[i][j].g);
+				fprintf(novaImagem, "%d ", RGB[i][j].b);
+			}else{
+				aux = 255;
+				fprintf(novaImagem, "%d ", aux);
+				fprintf(novaImagem, "%d ", aux);
+				fprintf(novaImagem, "%d ", aux);
 			}
 		}
-		fprintf(newImage, "\n");
+		fprintf(novaImagem, "\n");
 	}
-	fclose(image);
-	fclose(image2);
-	fclose(newImage);
+	fclose(imagem1);
+	fclose(imagem2);
+	fclose(novaImagem);
 
 	return 0;
 }
