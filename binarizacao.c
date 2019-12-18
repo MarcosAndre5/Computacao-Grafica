@@ -63,8 +63,7 @@ int main(){
 				fprintf(novaImagem, "\n%d ", RGB[i][j].r);
 				fprintf(novaImagem, "%d ", RGB[i][j].g);
 				fprintf(novaImagem, "%d ", RGB[i][j].b);
-			}
-			if(RGB[i][j].r >= 126){
+			}else if(RGB[i][j].r > 126){
 				RGB[i][j].r = 255;
 				RGB[i][j].g = 255;
 				RGB[i][j].b = 255;

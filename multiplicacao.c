@@ -66,7 +66,7 @@ int main(){
 
 	printf("Imagem2: largura = %d altura = %d chave = %s máximo = %d\n", _larg, _alt, _chave, _max);
 
-	novaImagem = fopen("arquivo.ppm", "w+");
+	novaImagem = fopen("imagem_opMultiplicacao.ppm", "w+");
 
 	if(novaImagem == NULL){
 		printf("Erro ao abrir a Nova Imagem!");
