@@ -7,32 +7,38 @@ typedef struct{
 }pixel;
 
 int main(){
-	FILE *imagem1;
-	FILE *imagem2;
+	FILE *imagem;
 	FILE *novaImagem;
 
-	char chave[5], _chave[5];
-	int i, j, larg, alt, max, aux, _i, _j, _larg, _alt, _max;
+	char chave[5];
+	int i, j, larg, alt, max;
 
-	imagem1 = fopen("AA.ppm", "r");
+	imagem = fopen("imagem_binarizada.ppm", "r");
 
-	if(imagem1 == NULL){
-		printf("Erro na abertura da Imagem1!\n");
+	if(imagem == NULL){
+		printf("Erro na abertura da Imagem!\n");
 		return 0;
 	}
 
-	fscanf(imagem1, "%s", chave);
+	fscanf(imagem, "%s", chave);
 
 	if(strcmp(chave, "P3") != 0){
-		printf("Erro! A Imagem1 não é no formato PPM.\n");
+		printf("Erro! A Imagem não é no formato PPM.\n");
 		printf("%s\n", chave);
-		fclose(imagem1);
+		fclose(imagem);
 		return 0;
 	}
 
-	fscanf(imagem1, "%d %d\n%d\n", &alt, &larg, &max);
+	fscanf(imagem, "%d %d\n%d\n", &alt, &larg, &max);
 
-	printf("Imagem: largura = %d altura = %d chave = %s máxima = %d\n", larg, alt, chave, max);
+	printf("Imagem: largura = %d altura = %d chave = %s máximo = %d\n", larg, alt, chave, max);
+
+	novaImagem = fopen("imagem_negada.ppm", "w+");
+
+	if(novaImagem == NULL){
+		printf("Erro ao abrir Nova Imagem!");
+		return 0;
+	}
 
 	pixel **RGB = (pixel**) malloc (alt*sizeof(pixel*));
 
@@ -40,69 +46,34 @@ int main(){
 		RGB[i] = (pixel*) malloc (larg*sizeof(pixel));
 
 	for(i = 0; i < alt; i++)
-		for(j = 0; j < larg; j++){
-			fscanf(imagem1, "%d", &RGB[i][j].r);
-			fscanf(imagem1, "%d", &RGB[i][j].g);
-			fscanf(imagem1, "%d", &RGB[i][j].b);
-		}
-
-	imagem2 = fopen("BB.ppm", "r");
-
-	if(imagem2 == NULL){
-		printf("Erro na abertura da Imagem2!\n");
-		return 0;
-	}
-
-	fscanf(imagem2, "%s", _chave);
-
-	if(strcmp(_chave, "P3") != 0){
-		printf("Erro! A Imagem2 não é no formato PPM.\n");
-		printf("%s\n", _chave);
-		fclose(imagem2);
-		return 0;
-	}
-
-	fscanf(imagem2, "%d %d\n%d\n", &_alt, &_larg, &_max);
-
-	printf("Imagem2: largura = %d altura = %d chave = %s máximo = %d\n", _larg, _alt, _chave, _max);
-
-	novaImagem = fopen("imagem_naoLogica.ppm", "w+");
-
-	if(novaImagem == NULL){
-		printf("Erro ao abrir a Nova Imagem!");
-		return 0;
-	}
-
-	pixel **RGB2 = (pixel**) malloc (alt*sizeof(pixel*));
-
-	for(i = 0; i < alt; i++)
-		RGB2[i] = (pixel*) malloc (larg*sizeof(pixel));
-
-	for(i = 0; i < alt; i++)
-		for(j = 0; j < larg; j++){
-			fscanf(imagem2, "%d", &RGB2[i][j].r);
-			fscanf(imagem2, "%d", &RGB2[i][j].g);
-			fscanf(imagem2, "%d", &RGB2[i][j].b);
+		for(j = 0;j < larg; j++){
+			fscanf(imagem, "%d", &RGB[i][j].r);
+			fscanf(imagem, "%d", &RGB[i][j].g);
+			fscanf(imagem, "%d", &RGB[i][j].b);
 		}
 
 	fprintf(novaImagem, "P3\n%d %d\n%d\n", alt, larg, max);
 
-	for(i = 0; i < alt; i++){
+	for(i = 0; i < alt; i++)
 		for(j = 0; j < larg; j++){
-			if((RGB[i][j].r == RGB2[i][j].r) && ((RGB[i][j].g == RGB2[i][j].g)) && (RGB[i][j].b == RGB2[i][j].b)){
-				fprintf(novaImagem, "%d ", 255);
-				fprintf(novaImagem, "%d ", 255);
-				fprintf(novaImagem, "%d ", 255);
-			}else{
-				fprintf(novaImagem, "%d ", RGB[i][j].r);
+			if(RGB[i][j].r == 255){
+				RGB[i][j].r = 0;
+				RGB[i][j].g = 0;
+				RGB[i][j].b = 0;
+				fprintf(novaImagem, "\n%d ", RGB[i][j].r);
+				fprintf(novaImagem, "%d ", RGB[i][j].g);
+				fprintf(novaImagem, "%d ", RGB[i][j].b);
+			}else if(RGB[i][j].r == 0){
+				RGB[i][j].r = 255;
+				RGB[i][j].g = 255;
+				RGB[i][j].b = 255;
+				fprintf(novaImagem, "\n%d ", RGB[i][j].r);
 				fprintf(novaImagem, "%d ", RGB[i][j].g);
 				fprintf(novaImagem, "%d ", RGB[i][j].b);
 			}
 		}
-		fprintf(novaImagem, "\n");
-	}
-	fclose(imagem1);
-	fclose(imagem2);
+
+	fclose(imagem);
 	fclose(novaImagem);
 
 	return 0;
