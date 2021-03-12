@@ -29,7 +29,7 @@ int main(){
 
 	fscanf(imagem, "%d %d\n%d\n", &altura, &largura, &tamanhoEscala);
 
-	printf("Informacoes da Imagem:\nChave = %s\nLargura = %d Altura = %d\nTamanho da Escala = %d\n", chave, largura, altura, tamanhoEscala);
+	printf("Informacoes da Imagem:\nChave = %s\nLargura = %d | Altura = %d\nTamanho da Escala = %d\n", chave, largura, altura, tamanhoEscala);
 
 	novaImagem = fopen("imagemNegativa.ppm", "w+");
 
@@ -59,7 +59,7 @@ int main(){
 			fprintf(novaImagem, "%d ", 255 - RGB[i][j].B);
 		}
 
-	printf("Nova Imagem gerada com Sucesso!\n");
+	printf("\nNova Imagem gerada com Sucesso!\n");
 	fclose(imagem);
 	fclose(novaImagem);
 	return 0;
