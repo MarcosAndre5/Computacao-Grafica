@@ -8,7 +8,7 @@ typedef struct{
 
 int main(){
 	int i, j, largura, altura, tamanhoEscala;
-	char chave[5];
+	char chave[2];
 
 	FILE *imagem, *novaImagem;
 
