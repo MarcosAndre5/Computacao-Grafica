@@ -10,8 +10,7 @@ int main(){
 	int i, j, largura, altura, tamanhoEscala, maior, menor, cinza, idMin = 50, idMax = 150;
 	char chave[2];
 
-	FILE *imagem;
-	FILE *novaImagem;
+	FILE *imagem, *novaImagem;
 
 	imagem = fopen("Lena.pgm", "r");
 
@@ -21,7 +20,7 @@ int main(){
 	}
 
 	fscanf(imagem, "%s", chave);
-	
+
 	if(strcmp(chave, "P2") != 0){
 		printf("Erro! A Imagem não é no formato PGM.\nChave: %s\n", chave);
 		fclose(imagem);
@@ -33,7 +32,7 @@ int main(){
 	printf("Informacoes da Imagem:\nChave = %s\nLargura = %d | Altura = %d\nTamanho da Escala = %d\n\n", chave, largura, altura, tamanhoEscala);
 
 	novaImagem = fopen("imagemAlargamentoConstraste.pgm","w+");
-	
+
 	if(novaImagem == NULL){
 		printf("Erro ao abrir Nova Imagem!");
 		return 0;
@@ -43,7 +42,7 @@ int main(){
 
 	for(i = 0; i < altura; i++)
 		CINZA[i] = (pixel*) malloc (largura * sizeof(pixel));
-	
+
 	for(i = 0; i < altura; i++)
 		for(j = 0; j < largura; j++)
 			fscanf(imagem, "%d", &CINZA[i][j].tomCinza);
@@ -59,14 +58,14 @@ int main(){
 
 	printf("Escala Máxima da Imagem: %d | Escala Minima da Imagem: %d\n", maior, menor);
 	printf("Id Máximo: %d | Id Mínimo: %d\n", idMax, idMin);
-	
+
 	if((maior - menor) <= 0){
 		printf("\nNão é possível aplicar o modelo nessa Imagem!\n");
 		fclose(imagem);
 		fclose(novaImagem);
 		return 0;
 	}
-	
+
 	fprintf(novaImagem, "P2\n%d %d\n%d\n", altura, largura, tamanhoEscala);
 
 	for(i = 0; i < altura; i++, fprintf(novaImagem, "\n"))

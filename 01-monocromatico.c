@@ -7,7 +7,7 @@ typedef struct{
 }pixel;
 
 int main(){
-	int i, j, largura, altura, tamanhoEscala, escalaCinza;
+	int i, j, largura, altura, tamanhoEscala;
 	char chave[2];
 
 	FILE *imagem, *novaImagem;
@@ -39,7 +39,7 @@ int main(){
 	}
 
 	pixel **RGB = (pixel**) malloc (altura * sizeof(pixel*));
-	
+
 	for(i = 0; i < altura; i++)
 		RGB[i] = (pixel*) malloc (largura * sizeof(pixel));
 
@@ -53,10 +53,8 @@ int main(){
 	fprintf(novaImagem, "P2\n%d %d\n%d\n", altura, largura, tamanhoEscala);
 
 	for(i = 0; i < altura; i++, fprintf(novaImagem, "\n"))
-		for(j = 0; j < largura; j++){
-			escalaCinza = (RGB[i][j].R + RGB[i][j].G + RGB[i][j].B) / 3;
-			fprintf(novaImagem, "%d ", escalaCinza);
-		}
+		for(j = 0; j < largura; j++)
+			fprintf(novaImagem, "%d ", (RGB[i][j].R + RGB[i][j].G + RGB[i][j].B) / 3);
 
 	printf("\nNova Imagem gerada com Sucesso!\n");
 	fclose(imagem);
