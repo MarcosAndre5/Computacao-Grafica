@@ -56,7 +56,7 @@ int main(){
 		for(j = 0; j < largura; j++)
 			fprintf(novaImagem, "%d ", (RGB[i][j].R + RGB[i][j].G + RGB[i][j].B) / 3);
 
-	printf("\nNova Imagem gerada com Sucesso!\n");
+	printf("Nova Imagem gerada com Sucesso!\n");
 	fclose(imagem);
 	fclose(novaImagem);
 	return 0;
