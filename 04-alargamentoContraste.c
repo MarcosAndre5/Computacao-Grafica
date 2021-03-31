@@ -70,11 +70,11 @@ int main(){
 
 	for(i = 0; i < altura; i++, fprintf(novaImagem, "\n"))
 		for(j = 0; j < largura; j++){
-			cinza = (CINZA[i][j].tomCinza - menor) * (idMax - idMin) / (maior - menor) + menor;
+			cinza = (CINZA[i][j].tomCinza - menor) * (idMax - idMin) / (maior - menor) + idMin;
 			fprintf(novaImagem, "%d ", cinza);
 		}
 
-	printf("\nNova Imagem gerada com Sucesso!\n");
+	printf("Nova Imagem gerada com Sucesso!\n");
 	fclose(imagem);
 	fclose(novaImagem);
 	return 0;

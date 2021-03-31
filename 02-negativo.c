@@ -59,7 +59,7 @@ int main(){
 			fprintf(novaImagem, "%d ", 255 - RGB[i][j].B);
 		}
 
-	printf("\nNova Imagem gerada com Sucesso!\n");
+	printf("Nova Imagem gerada com Sucesso!\n");
 	fclose(imagem);
 	fclose(novaImagem);
 	return 0;

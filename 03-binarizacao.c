@@ -67,7 +67,7 @@ int main(){
 			}
 		}
 
-	printf("\nNova Imagem gerada com Sucesso!\n");
+	printf("Nova Imagem gerada com Sucesso!\n");
 	fclose(imagem);
 	fclose(novaImagem);
 	return 0;
